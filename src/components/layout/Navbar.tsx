@@ -35,15 +35,14 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-background/95 backdrop-blur-md shadow-lg border-b border-border/50"
-            : "bg-transparent"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+          ? "bg-background/95 backdrop-blur-md shadow-lg border-b border-border/50"
+          : "bg-transparent"
+          }`}
       >
         <div className="container mx-auto flex items-center justify-between px-4 py-4">
           <Link to="/" className="flex items-center gap-2">
-            <span className="font-display text-2xl font-bold tracking-tight text-gold">
+            <span className="font-display text-2xl font-bold tracking-tight text-primary">
               Nandana
             </span>
             <span className="hidden sm:inline font-body text-sm text-muted-foreground tracking-widest uppercase">
@@ -57,13 +56,14 @@ export default function Navbar() {
               <Link
                 key={link.to}
                 to={link.to}
-                className={`font-body text-lg tracking-wide transition-colors hover:text-gold ${
-                  location.pathname === link.to
-                    ? "text-gold font-semibold"
-                    : "text-foreground/80"
-                }`}
+                className={`font-body text-base font-medium tracking-wide transition-all hover:text-primary relative group ${location.pathname === link.to
+                  ? "text-primary"
+                  : "text-foreground/70"
+                  }`}
               >
                 {link.label}
+                <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-primary transform origin-left transition-transform duration-300 ${location.pathname === link.to ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                  }`} />
               </Link>
             ))}
             <button
@@ -71,7 +71,7 @@ export default function Navbar() {
               className="p-2 rounded-full hover:bg-secondary transition-colors"
               aria-label="Toggle theme"
             >
-              {dark ? <Sun className="w-5 h-5 text-gold" /> : <Moon className="w-5 h-5" />}
+              {dark ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5" />}
             </button>
           </div>
 
@@ -82,7 +82,7 @@ export default function Navbar() {
               className="p-2 rounded-full hover:bg-secondary transition-colors"
               aria-label="Toggle theme"
             >
-              {dark ? <Sun className="w-5 h-5 text-gold" /> : <Moon className="w-5 h-5" />}
+              {dark ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5" />}
             </button>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -113,9 +113,8 @@ export default function Navbar() {
               >
                 <Link
                   to={link.to}
-                  className={`font-display text-3xl tracking-wide transition-colors hover:text-gold ${
-                    location.pathname === link.to ? "text-gold" : "text-foreground"
-                  }`}
+                  className={`font-display text-3xl tracking-wide transition-colors hover:text-primary ${location.pathname === link.to ? "text-primary" : "text-foreground"
+                    }`}
                 >
                   {link.label}
                 </Link>

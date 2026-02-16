@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,44 +6,53 @@
 
 @layer base {
   :root {
-    --background: 40 33% 97%;
-    --foreground: 0 30% 12%;
+    /* Soft Cream/White Background */
+    --background: 40 50% 99%;
+    /* Dark Slate Foreground */
+    --foreground: 222 47% 11%;
 
-    --card: 40 25% 98%;
-    --card-foreground: 0 30% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
 
-    --popover: 40 25% 98%;
-    --popover-foreground: 0 30% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 0 55% 28%;
-    --primary-foreground: 40 33% 97%;
+    /* Soft Lavender Primary */
+    --primary: 250 80% 85%;
+    --primary-foreground: 222 47% 11%;
 
-    --secondary: 36 40% 90%;
-    --secondary-foreground: 0 30% 12%;
+    /* Soft Pink/Lilac Secondary */
+    --secondary: 300 70% 92%;
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 36 25% 92%;
-    --muted-foreground: 0 10% 45%;
+    /* Light Gray Muted */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 43 74% 49%;
-    --accent-foreground: 0 30% 10%;
+    /* Pastel Mint Accent */
+    --accent: 160 50% 75%;
+    --accent-foreground: 222 47% 11%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 36 30% 85%;
-    --input: 36 30% 85%;
-    --ring: 43 74% 49%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 260 60% 75%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    --gold: 43 74% 49%;
-    --gold-light: 43 80% 68%;
-    --maroon: 0 55% 28%;
-    --maroon-dark: 0 45% 18%;
-    --champagne: 36 50% 88%;
-    --ivory: 40 33% 97%;
+    /* Re-mapping legacy colors to new scheme to avoid breakage, but nudging them to pastel */
+    --gold: 43 74% 69%;
+    /* Softer gold */
+    --gold-light: 43 80% 78%;
+    --maroon: 340 70% 65%;
+    /* Replaced with darker rose */
+    --maroon-dark: 340 70% 55%;
+    --champagne: 36 50% 94%;
+    --ivory: 40 50% 99%;
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 0 0% 99%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
     --sidebar-primary-foreground: 0 0% 98%;
@@ -54,49 +63,33 @@
   }
 
   .dark {
-    --background: 0 20% 6%;
-    --foreground: 40 25% 92%;
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 18% 10%;
-    --card-foreground: 40 25% 92%;
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 18% 10%;
-    --popover-foreground: 40 25% 92%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 43 74% 49%;
-    --primary-foreground: 0 20% 6%;
+    --primary: 260 60% 75%;
+    --primary-foreground: 222 47% 11%;
 
-    --secondary: 0 20% 14%;
-    --secondary-foreground: 40 25% 92%;
+    --secondary: 340 70% 85%;
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 0 15% 16%;
-    --muted-foreground: 36 15% 60%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 43 74% 49%;
-    --accent-foreground: 0 20% 6%;
+    --accent: 160 50% 75%;
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 0 15% 18%;
-    --input: 0 15% 18%;
-    --ring: 43 74% 49%;
-
-    --gold: 43 74% 49%;
-    --gold-light: 43 80% 68%;
-    --maroon: 0 55% 28%;
-    --maroon-dark: 0 45% 18%;
-    --champagne: 36 30% 25%;
-    --ivory: 40 20% 15%;
-
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 260 60% 75%;
   }
 }
 
@@ -107,33 +100,40 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Outfit', sans-serif;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Outfit', sans-serif;
   }
 
   .font-body {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
+  /* Updated Glass effect */
   .glass {
-    @apply bg-card/70 backdrop-blur-md border border-border/50;
+    @apply bg-white/70 backdrop-blur-lg border border-white/20 shadow-sm;
   }
 
+  /* Using new pastel gradients */
   .gold-gradient {
-    background: linear-gradient(135deg, hsl(43 74% 49%), hsl(43 80% 68%));
+    background: linear-gradient(135deg, hsl(260 60% 75%), hsl(340 70% 85%));
   }
 
   .text-gold-gradient {
-    background: linear-gradient(135deg, hsl(43 74% 49%), hsl(43 80% 68%));
+    background: linear-gradient(135deg, hsl(260 60% 75%), hsl(340 70% 85%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

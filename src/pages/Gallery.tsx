@@ -1,98 +1,125 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, ZoomIn } from "lucide-react";
 
-const categories = ["All", "Weddings", "Receptions", "Engagements", "Decorations"];
+// Image filenames from public/galary_image
+const imageFilenames = [
+  "RKP01878.jpg (1).jpg",
+  "RKP02134.jpg (1).jpg",
+  "RKP02138.jpg (1).jpg",
+  "RKP02142.jpg (1).jpg",
+  "RKP02146.jpg (1).jpg",
+  "RKP02149.jpg (1).jpg",
+  "RKP02157.jpg (1).jpg",
+  "RKP02159.jpg (1).jpg",
+  "RKP02189.jpg (1).jpg",
+  "RKP02473.jpg (1).jpg",
+  "RKP02484.jpg (1).jpg",
+  "RKP03599.jpg (1).jpg",
+  "RKP09880.jpg (1).jpg",
+  "RKP09885.jpg (1).jpg",
+  "RKP09925.jpg (1).jpg",
+];
 
-const galleryItems = Array.from({ length: 12 }, (_, i) => ({
-  id: i,
-  category: categories[1 + (i % 4)],
-  aspect: i % 3 === 0 ? "aspect-[3/4]" : i % 3 === 1 ? "aspect-square" : "aspect-[4/3]",
-  gradient: [
-    "from-gold/20 to-maroon/20",
-    "from-maroon/20 to-champagne",
-    "from-champagne to-gold/20",
-    "from-gold/30 to-maroon/10",
-  ][i % 4],
+// Combine filenames with aspects
+const galleryItems = imageFilenames.map((filename, index) => ({
+  id: index,
+  src: `/galary_image/${filename}`,
+  // Varied aspect ratios for masonry effect
+  aspect: index % 3 === 0 ? "aspect-[3/4]" : index % 3 === 1 ? "aspect-square" : "aspect-[4/3]",
+  alt: `Gallery Image ${index + 1}`
 }));
 
 export default function Gallery() {
-  const [filter, setFilter] = useState("All");
-  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
 
-  const filtered = filter === "All" ? galleryItems : galleryItems.filter((g) => g.category === filter);
+  const selectedImage = galleryItems.find(item => item.id === selectedImageId);
 
   return (
-    <main className="pt-24 pb-16 min-h-screen bg-background">
+    <main className="pt-32 pb-20 min-h-screen bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <p className="font-body text-lg text-gold tracking-[0.2em] uppercase mb-3">Our Work</p>
-          <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground">
-            Event <span className="text-gold-gradient italic">Gallery</span>
-          </h1>
+        <div className="text-center mb-16">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-body text-sm font-bold text-primary tracking-[0.2em] uppercase mb-4 inline-block px-4 py-1.5 bg-primary/10 rounded-full"
+          >
+            Our Masterpieces
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="font-display text-4xl md:text-6xl font-bold text-foreground"
+          >
+            Event <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary italic">Gallery</span>
+          </motion.h1>
         </div>
 
-        {/* Filters */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`px-6 py-2 font-body text-lg tracking-wide rounded-sm transition-all ${
-                filter === cat
-                  ? "gold-gradient text-foreground shadow-md"
-                  : "border border-border text-muted-foreground hover:border-gold hover:text-gold"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        {/* Masonry Grid */}
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+          <AnimatePresence mode="popLayout">
+            {galleryItems.map((item, i) => (
+              <motion.div
+                key={item.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4 }}
+                className="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-shadow bg-muted"
+                onClick={() => setSelectedImageId(item.id)}
+              >
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  loading="lazy"
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
+                />
 
-        {/* Masonry grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-          {filtered.map((item, i) => (
-            <motion.div
-              key={item.id}
-              layout
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className={`break-inside-avoid ${item.aspect} bg-gradient-to-br ${item.gradient} rounded-sm cursor-pointer hover:scale-[1.02] transition-transform flex items-center justify-center`}
-              onClick={() => setLightbox(item.id)}
-            >
-              <span className="font-body text-lg text-muted-foreground/50">{item.category}</span>
-            </motion.div>
-          ))}
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="flex flex-col items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white mb-2">
+                      <ZoomIn className="w-6 h-6" />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
-
-        <p className="text-center font-body text-lg text-muted-foreground mt-12">
-          Upload your real venue photos to replace these placeholders.
-        </p>
       </div>
 
-      {/* Lightbox */}
+      {/* Lightbox Modal */}
       <AnimatePresence>
-        {lightbox !== null && (
+        {selectedImage && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-            onClick={() => setLightbox(null)}
+            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8"
+            onClick={() => setSelectedImageId(null)}
           >
-            <button className="absolute top-6 right-6 text-white" aria-label="Close">
+            <button
+              className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+              onClick={() => setSelectedImageId(null)}
+            >
               <X className="w-8 h-8" />
             </button>
+
             <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="w-full max-w-2xl aspect-video bg-gradient-to-br from-gold/20 to-maroon/20 rounded-sm flex items-center justify-center"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative max-w-5xl max-h-[90vh] w-full flex items-center justify-center rounded-lg overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <span className="font-body text-2xl text-white/50">Image Preview</span>
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                className="max-w-full max-h-[90vh] object-contain"
+              />
             </motion.div>
           </motion.div>
         )}

@@ -46,17 +46,17 @@ export default function TestimonialsSection() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.4 }}
-              className="glass rounded-sm p-10"
+              className="bg-card text-card-foreground border border-border/50 shadow-sm rounded-sm p-10 backdrop-blur-sm"
             >
               <div className="flex justify-center gap-1 mb-4">
                 {Array.from({ length: testimonials[index].rating }).map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-gold text-gold" />
+                  <Star key={i} className="w-5 h-5 fill-primary text-primary" />
                 ))}
               </div>
               <p className="font-body text-xl text-foreground leading-relaxed italic mb-6">
                 "{testimonials[index].text}"
               </p>
-              <p className="font-display text-lg font-semibold text-gold">
+              <p className="font-display text-lg font-semibold text-primary">
                 — {testimonials[index].name}
               </p>
             </motion.div>
