@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FloatingButtons from "@/components/layout/FloatingButtons";
+import ScrollManager from "@/components/layout/ScrollManager";
 import Index from "./pages/Index";
 import Gallery from "./pages/Gallery";
 import VirtualTour from "./pages/VirtualTour";
@@ -22,6 +23,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollManager />
         <Navbar />
         <Routes>
           <Route path="/" element={<Index />} />

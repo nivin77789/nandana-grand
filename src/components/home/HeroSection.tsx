@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, ArrowRight, Star } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero2.png";
 import { useRef } from "react";
 
 export default function HeroSection() {
@@ -32,10 +32,10 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Simplified overlays for performance */}
-        <div className="absolute inset-0 bg-black/5 mix-blend-overlay" />
-        <div className="absolute inset-0 bg-white/20" />
-        <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-primary/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+        {/* Radiant Purple Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-transparent to-purple-800/40 mix-blend-overlay" />
+        {/* Bottom fade to content */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-background/5 to-transparent" />
       </motion.div>
 
       {/* Reduced Particle count for performance */}
@@ -87,7 +87,7 @@ export default function HeroSection() {
           transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
           className="mb-8 relative"
         >
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-[1.1] drop-shadow-lg">
+          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1] drop-shadow-xl shadow-black/20">
             Nandana <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-600 to-secondary pb-2">
               Grand
@@ -99,10 +99,10 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="font-body text-lg md:text-2xl text-foreground/90 mb-10 max-w-2xl mx-auto leading-relaxed font-medium"
+          className="font-body text-lg md:text-2xl text-white/95 mb-10 max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-md"
         >
           Curating timeless memories with elegance and grandeur. <br className="hidden md:block" />
-          <span className="text-muted-foreground font-normal">The perfect setting for your forever.</span>
+          <span className="text-white/80 font-normal">The perfect setting for your forever.</span>
         </motion.p>
 
         <motion.div
@@ -111,15 +111,17 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="flex flex-col sm:flex-row gap-5 justify-center items-center"
         >
-          <Link
-            to="/book"
+          <a
+            href="https://wa.me/919481250259?text=Hi! I'd like to book Nandana Convention."
+            target="_blank"
+            rel="noopener noreferrer"
             className="group relative px-8 py-4 bg-primary text-primary-foreground font-display font-bold text-lg rounded-full overflow-hidden shadow-xl hover:shadow-primary/40 hover:scale-105 transition-all duration-300"
           >
             <span className="relative z-10 flex items-center gap-2 group-hover:gap-3 transition-all">
               Book Your Date <ArrowRight className="w-5 h-5" />
             </span>
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
-          </Link>
+          </a>
 
           <Link
             to="/gallery"
@@ -144,8 +146,8 @@ export default function HeroSection() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20 cursor-pointer opacity-70 hover:opacity-100 transition-opacity"
         onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
       >
-        <span className="font-body text-[10px] font-bold text-foreground tracking-[0.3em] uppercase">Scroll Down</span>
-        <ChevronDown className="w-5 h-5 text-foreground" />
+        <span className="font-body text-[10px] font-bold text-white tracking-[0.3em] uppercase drop-shadow-md">Scroll Down</span>
+        <ChevronDown className="w-5 h-5 text-white drop-shadow-md" />
       </motion.div>
     </section>
   );
