@@ -30,7 +30,7 @@ export default function AboutSection() {
       <div className="container mx-auto px-4">
         <div
           ref={ref}
-          className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center transition-all duration-1000 relative z-10 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10"
         >
           {/* Image Side */}
           <div className="relative group perspective-1000 h-full">
@@ -91,11 +91,7 @@ export default function AboutSection() {
 
           {/* Text Side */}
           <div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={isVisible ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
+            <motion.div>
               <span className="font-body text-sm font-bold text-primary tracking-[0.2em] uppercase mb-4 px-4 py-1.5 bg-primary/10 inline-block rounded-full">
                 About Us
               </span>
@@ -113,9 +109,6 @@ export default function AboutSection() {
                 {highlights.map((item, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.5, delay: 0.4 + (index * 0.1) }}
                     className="flex items-start gap-3 group p-3 rounded-xl hover:bg-secondary/10 transition-colors duration-300"
                   >
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300">

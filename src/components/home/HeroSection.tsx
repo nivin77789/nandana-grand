@@ -8,19 +8,12 @@ import { useBooking } from "@/contexts/BookingContext";
 
 export default function HeroSection() {
   const { openBooking } = useBooking();
-  const [showVideo, setShowVideo] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowVideo(true);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
 
   // Optimized animations: Removed mouse move parallax and reduced blur intensity for better performance
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
@@ -34,30 +27,29 @@ export default function HeroSection() {
         className="absolute inset-0 z-0"
       >
         {/* Video Background */}
-        {showVideo && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.5 }}
-            className="absolute inset-0"
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: videoLoaded ? 1 : 0 }}
+          transition={{ duration: 1 }}
+          className="absolute inset-0"
+        >
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            onCanPlayThrough={() => setVideoLoaded(true)}
+            className="w-full h-full object-cover"
           >
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            >
-              <source src={heroVideo} type="video/mp4" />
-            </video>
-          </motion.div>
-        )}
+            <source src={heroVideo} type="video/mp4" />
+          </video>
+        </motion.div>
 
-        {/* Image Background - Fades out when video shows */}
+        {/* Image Background - Fades out when video is ready */}
         <motion.div
           animate={{
-            opacity: showVideo ? 0 : 1,
-            scale: showVideo ? 1.05 : [1, 1.05]
+            opacity: videoLoaded ? 0 : 1,
+            scale: videoLoaded ? 1.05 : [1, 1.05]
           }}
           transition={{
             opacity: { duration: 1.5 },
@@ -65,12 +57,13 @@ export default function HeroSection() {
           }}
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroBg})` }}
-        >
-        </motion.div>
+        />
 
         {/* Simplified overlays for performance */}
         {/* Radiant Purple Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-transparent to-purple-800/40 mix-blend-overlay" />
+        {/* Dark Gradient Shade */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
         {/* Bottom fade to content */}
         <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-background/5 to-transparent" />
       </motion.div>

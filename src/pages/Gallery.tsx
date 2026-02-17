@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ZoomIn } from "lucide-react";
+import { X, ZoomIn, Play } from "lucide-react";
 
 // Image filenames from public/galary_image
 const imageFilenames = [
@@ -21,19 +21,37 @@ const imageFilenames = [
   "RKP09925.jpg (1).jpg",
 ];
 
+type GalleryItem = {
+  id: number;
+  src: string;
+  type: "image" | "video";
+  aspect: string;
+  alt?: string;
+};
+
 // Combine filenames with aspects
-const galleryItems = imageFilenames.map((filename, index) => ({
-  id: index,
-  src: `/galary_image/${filename}`,
-  // Varied aspect ratios for masonry effect
-  aspect: index % 3 === 0 ? "aspect-[3/4]" : index % 3 === 1 ? "aspect-square" : "aspect-[4/3]",
-  alt: `Gallery Image ${index + 1}`
-}));
+const galleryItems: GalleryItem[] = [
+  {
+    id: -1,
+    src: "/galary_image/views.mp4",
+    type: "video",
+    aspect: "aspect-video",
+    alt: "Venue Video Tour"
+  },
+  ...imageFilenames.map((filename, index) => ({
+    id: index,
+    src: `/galary_image/${filename}`,
+    type: "image" as const,
+    // Varied aspect ratios for masonry effect
+    aspect: index % 3 === 0 ? "aspect-[3/4]" : index % 3 === 1 ? "aspect-square" : "aspect-[4/3]",
+    alt: `Gallery Image ${index + 1}`
+  }))
+];
 
 export default function Gallery() {
-  const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
+  const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
 
-  const selectedImage = galleryItems.find(item => item.id === selectedImageId);
+  const selectedItem = galleryItems.find(item => item.id === selectedItemId);
 
   return (
     <main className="pt-32 pb-20 min-h-screen bg-background">
@@ -59,7 +77,7 @@ export default function Gallery() {
         {/* Masonry Grid */}
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
           <AnimatePresence mode="popLayout">
-            {galleryItems.map((item, i) => (
+            {galleryItems.map((item) => (
               <motion.div
                 key={item.id}
                 layout
@@ -68,20 +86,38 @@ export default function Gallery() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
                 className="break-inside-avoid relative group rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-shadow bg-muted"
-                onClick={() => setSelectedImageId(item.id)}
+                onClick={() => setSelectedItemId(item.id)}
               >
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  loading="lazy"
-                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                {item.type === "video" ? (
+                  <div className="relative w-full h-full aspect-video">
+                    <video
+                      src={item.src}
+                      className="w-full h-full object-cover"
+                      muted
+                      loop
+                      autoPlay
+                      playsInline
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                      <div className="w-12 h-12 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white">
+                        <Play className="w-5 h-5 fill-current" />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    loading="lazy"
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                )}
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
                   <div className="flex flex-col items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                     <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white mb-2">
-                      <ZoomIn className="w-6 h-6" />
+                      {item.type === "video" ? <Play className="w-6 h-6 fill-current" /> : <ZoomIn className="w-6 h-6" />}
                     </div>
                   </div>
                 </div>
@@ -93,17 +129,17 @@ export default function Gallery() {
 
       {/* Lightbox Modal */}
       <AnimatePresence>
-        {selectedImage && (
+        {selectedItem && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8"
-            onClick={() => setSelectedImageId(null)}
+            onClick={() => setSelectedItemId(null)}
           >
             <button
               className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
-              onClick={() => setSelectedImageId(null)}
+              onClick={() => setSelectedItemId(null)}
             >
               <X className="w-8 h-8" />
             </button>
@@ -115,11 +151,20 @@ export default function Gallery() {
               className="relative max-w-5xl max-h-[90vh] w-full flex items-center justify-center rounded-lg overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <img
-                src={selectedImage.src}
-                alt={selectedImage.alt}
-                className="max-w-full max-h-[90vh] object-contain"
-              />
+              {selectedItem.type === "video" ? (
+                <video
+                  src={selectedItem.src}
+                  className="max-w-full max-h-[90vh] w-full h-auto object-contain"
+                  controls
+                  autoPlay
+                />
+              ) : (
+                <img
+                  src={selectedItem.src}
+                  alt={selectedItem.alt}
+                  className="max-w-full max-h-[90vh] object-contain"
+                />
+              )}
             </motion.div>
           </motion.div>
         )}
