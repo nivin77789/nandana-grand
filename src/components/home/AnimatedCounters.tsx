@@ -5,24 +5,24 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const stats = [
   {
     id: 1,
-    value: 500,
-    label: "Events Hosted",
+    value: 3000,
+    label: "Max Crowd",
     suffix: "+",
-    description: "Grand Weddings & Celebrations"
+    description: "Floating Crowd Capacity"
   },
   {
     id: 2,
-    value: 10000,
+    value: 50,
     label: "Happy Families",
     suffix: "+",
     description: "Trusting us with their special moments"
   },
   {
     id: 3,
-    value: 15,
-    label: "Years of Service",
+    value: 100,
+    label: "Events Hosted",
     suffix: "+",
-    description: "Excellence in Hospitality"
+    description: "Grand Weddings & Celebrations"
   },
 ];
 
