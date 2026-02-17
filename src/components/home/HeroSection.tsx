@@ -1,17 +1,26 @@
+import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, ArrowRight, Star } from "lucide-react";
 import heroBg from "@/assets/hero2.png";
-import { useRef } from "react";
+import heroVideo from "@/assets/hero.mp4";
 import { useBooking } from "@/contexts/BookingContext";
 
 export default function HeroSection() {
   const { openBooking } = useBooking();
+  const [showVideo, setShowVideo] = useState(false);
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowVideo(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Optimized animations: Removed mouse move parallax and reduced blur intensity for better performance
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
@@ -24,13 +33,39 @@ export default function HeroSection() {
         style={{ y, opacity }}
         className="absolute inset-0 z-0"
       >
+        {/* Video Background */}
+        {showVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5 }}
+            className="absolute inset-0"
+          >
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source src={heroVideo} type="video/mp4" />
+            </video>
+          </motion.div>
+        )}
+
+        {/* Image Background - Fades out when video shows */}
         <motion.div
-          initial={{ scale: 1 }}
-          animate={{ scale: 1.05 }}
-          transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
+          animate={{
+            opacity: showVideo ? 0 : 1,
+            scale: showVideo ? 1.05 : [1, 1.05]
+          }}
+          transition={{
+            opacity: { duration: 1.5 },
+            scale: { duration: 20, repeat: Infinity, repeatType: "reverse", ease: "linear" }
+          }}
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${heroBg})` }}
         >
-          <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${heroBg})` }} />
         </motion.div>
 
         {/* Simplified overlays for performance */}
