@@ -15,7 +15,10 @@ const highlights = [
   { icon: Accessibility, text: "Easy Accessibility for All Guests" },
 ];
 
+import { useBooking } from "@/contexts/BookingContext";
+
 export default function AboutSection() {
+  const { openBooking } = useBooking();
   const { ref, isVisible } = useScrollReveal();
 
   return (
@@ -54,14 +57,12 @@ export default function AboutSection() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <a
-                      href="https://wa.me/919481250259?text=Hi! I'd like to book Nandana Convention."
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={openBooking}
                       className="px-5 py-2.5 bg-primary text-primary-foreground text-sm font-bold rounded-full hover:bg-white hover:text-primary transition-all shadow-lg hover:shadow-primary/50 flex items-center gap-2"
                     >
                       Book Now <ArrowRight className="w-4 h-4" />
-                    </a>
+                    </button>
                     <Link
                       to="/gallery"
                       className="px-5 py-2.5 bg-white/10 backdrop-blur-md border border-white/40 text-white text-sm font-bold rounded-full hover:bg-white hover:text-primary transition-all shadow-lg flex items-center gap-2"

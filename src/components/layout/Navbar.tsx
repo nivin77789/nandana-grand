@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useBooking } from "@/contexts/BookingContext";
 
 const navLinks = [
   { label: "Home", to: "/" },
@@ -12,6 +13,7 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const { openBooking } = useBooking();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dark, setDark] = useState(false);
@@ -97,14 +99,12 @@ export default function Navbar() {
               {dark ? <Sun className="w-5 h-5 text-yellow-400" /> : <Moon className="w-5 h-5 text-current" />}
             </button>
 
-            <a
-              href="https://wa.me/919481250259?text=Hi! I'd like to book Nandana Convention."
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={openBooking}
               className={`px-5 py-2.5 rounded-full font-display text-sm font-bold tracking-wide transition-all duration-300 shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95 ${scrolled ? "bg-primary text-primary-foreground" : "bg-white text-primary hover:bg-white/90"}`}
             >
               Book Now
-            </a>
+            </button>
           </div>
 
           {/* Mobile hamburger */}
@@ -168,15 +168,15 @@ export default function Navbar() {
               transition={{ delay: 0.4 }}
               className="mt-8"
             >
-              <a
-                href="https://wa.me/919481250259?text=Hi! I'd like to book Nandana Convention."
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMobileOpen(false)}
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  openBooking();
+                }}
                 className="px-8 py-3 bg-primary text-primary-foreground font-display text-xl font-bold rounded-full shadow-xl"
               >
                 Book Your Event
-              </a>
+              </button>
             </motion.div>
           </motion.div>
         )}

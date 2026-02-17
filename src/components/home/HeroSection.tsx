@@ -3,8 +3,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, ArrowRight, Star } from "lucide-react";
 import heroBg from "@/assets/hero2.png";
 import { useRef } from "react";
+import { useBooking } from "@/contexts/BookingContext";
 
 export default function HeroSection() {
+  const { openBooking } = useBooking();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -111,17 +113,15 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="flex flex-col sm:flex-row gap-5 justify-center items-center"
         >
-          <a
-            href="https://wa.me/919481250259?text=Hi! I'd like to book Nandana Convention."
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={openBooking}
             className="group relative px-8 py-4 bg-primary text-primary-foreground font-display font-bold text-lg rounded-full overflow-hidden shadow-xl hover:shadow-primary/40 hover:scale-105 transition-all duration-300"
           >
             <span className="relative z-10 flex items-center gap-2 group-hover:gap-3 transition-all">
               Book Your Date <ArrowRight className="w-5 h-5" />
             </span>
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
-          </a>
+          </button>
 
           <Link
             to="/gallery"

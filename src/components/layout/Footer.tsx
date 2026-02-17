@@ -63,6 +63,15 @@ export default function Footer() {
               >
                 <Instagram className="w-5 h-5" />
               </a>
+              <a
+                href="https://wa.me/919481250259?text=Hi! I'd like to book Nandana Convention."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300"
+                aria-label="WhatsApp"
+              >
+                <Phone className="w-5 h-5" />
+              </a>
             </div>
           </div>
         </div>

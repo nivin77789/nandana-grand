@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useRef } from "react";
+import { useBooking } from "@/contexts/BookingContext";
 
 export default function CTABanner() {
+  const { openBooking } = useBooking();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -61,16 +63,14 @@ export default function CTABanner() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href="https://wa.me/919481250259?text=Hi! I'd like to book Nandana Convention."
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={openBooking}
               className="group relative px-8 py-4 bg-white text-primary font-display font-bold text-lg rounded-full overflow-hidden shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 min-w-[200px]"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 Book Now <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
-            </a>
+            </button>
 
             <Link
               to="/contact"

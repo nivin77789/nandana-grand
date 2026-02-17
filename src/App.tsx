@@ -14,29 +14,34 @@ import Packages from "./pages/Packages";
 import BookNow from "./pages/BookNow";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import { BookingProvider } from "@/contexts/BookingContext";
+import BookingModal from "@/components/shared/BookingModal";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollManager />
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/virtual-tour" element={<VirtualTour />} />
-          <Route path="/packages" element={<Packages />} />
-          <Route path="/book" element={<BookNow />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Footer />
-        <FloatingButtons />
-      </BrowserRouter>
+      <BookingProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollManager />
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/virtual-tour" element={<VirtualTour />} />
+            <Route path="/packages" element={<Packages />} />
+            <Route path="/book" element={<BookNow />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Footer />
+          <FloatingButtons />
+          <BookingModal />
+        </BrowserRouter>
+      </BookingProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
